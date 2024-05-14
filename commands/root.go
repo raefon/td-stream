@@ -54,7 +54,7 @@ func initConfig() {
 		viper.SetConfigFile(filepath.Join(home, ".tensordock.yml"))
 	}
 
-	viper.SetDefault("serviceUrl", "https://console.tensordock.com/api")
+	viper.SetDefault("serviceUrl", "https://marketplace.tensordock.com/api/v0/client")
 
 	err := viper.ReadInConfig()
 	if err != nil {
