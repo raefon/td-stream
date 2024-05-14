@@ -11,4 +11,5 @@ go build
 ```
 
 ## TODO
-...
+fix billing stuff
+implement server manager / modify server api
