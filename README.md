@@ -12,4 +12,5 @@ go build
 
 ## TODO
 fix billing stuff \
-implement server manager / modify server api
+implement server manager / modify server api \
+Test wolf install logic
