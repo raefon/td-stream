@@ -95,38 +95,6 @@ var (
 		Args:  cobra.ExactArgs(1),
 		RunE:  serverStatus,
 	}
-
-// need to implement
-/*
-	dockerCommandsViaSSHCmd = &cobra.Command{
-		Use:   "docker-cmd server_id command",
-		Short: "Execute a Docker command via SSH for a specified server",
-		Args:  cobra.MinimumNArgs(2),
-		RunE:  dockerCommandsViaSSH,
-	}
-	// Wolf stuff
-	wolfLogsCmd = &cobra.Command{
-		Use:   "wolf_logs server_id",
-		Short: "Fetch logs from wolf on a server",
-		Args:  cobra.ExactArgs(1), // Expects exactly one argument: server_id
-		RunE: func(cmd *cobra.Command, args []string) error {
-			// Hardcoded container ID
-			containerID := "your_container_id_here"
-			dockerCommand := "logs " + containerID
-
-			// Prepare the arguments for dockerCommandsViaSSH
-			dockerArgs := append([]string{args[0]}, dockerCommand)
-
-			// Ensure flags are set for SSH
-			cmd.Flags().String("bin", "ssh", "Name of SSH client executable (e.g., ssh, mosh)")
-			cmd.Flags().String("user", "user", "User account to use for login")
-			cmd.Flags().String("keyPath", "~/.ssh/id_rsa", "Path to private key used for authentication")
-
-			// Call dockerCommandsViaSSH with the server ID and the Docker command
-			return dockerCommandsViaSSH(cmd, dockerArgs)
-		},
-	}
-*/
 )
 
 func init() {
@@ -153,15 +121,6 @@ func init() {
 	deployCmd.Flags().String("internal_ports", "80,443", "Internal ports to be used by the server")
 	deployCmd.Flags().String("external_ports", "47600,46701", "External ports to be used by the server")
 
-	//need to implement
-	/*	serversCmd.AddCommand(manageCmd)
-
-		serversCmd.AddCommand(sshCmd)
-		sshCmd.Flags().String("bin", "ssh", "Name of SSH client executable (e.g. ssh, mosh)")
-		sshCmd.Flags().String("user", "user", "User account to use for login")
-		sshCmd.Flags().String("extraFlags", "", "Extra flags to pass to the SSH client")
-		sshCmd.Flags().String("keyPath", "~/.ssh/id_rsa", "Path to private key used for authentication")
-	*/
 	serversCmd.AddCommand(restartCmd)
 
 	serversCmd.AddCommand(modifyCmd)
@@ -174,12 +133,8 @@ func init() {
 
 	serversCmd.AddCommand(statusCmd)
 
-	//serversCmd.AddCommand(dockerCommandsViaSSHCmd)
-
 	rootCmd.AddCommand(serversCmd)
 
-	// Wolf stuff
-	//rootCmd.AddCommand(wolfLogsCmd)
 }
 
 func serverList(cmd *cobra.Command, args []string) error {
@@ -391,55 +346,6 @@ func deployServer(cmd *cobra.Command, args []string) error {
 }
 */
 
-// need to fix
-/* func executeSSHCommand(serverId, bin, user, keyPath, command string) error {
-	res, err := client.GetServer(serverId)
-	if err != nil {
-		return err
-	}
-
-	if !res.Success {
-		return errors.New(res.Error)
-	}
-
-	sshCmd := exec.Command(bin, "-i", keyPath, fmt.Sprintf("%v@%v", user, res.Server.Ip), command)
-	sshCmd.Stdin = os.Stdin
-	sshCmd.Stdout = os.Stdout
-	sshCmd.Stderr = os.Stderr
-
-	if err := sshCmd.Run(); err != nil {
-		return err
-	}
-
-	return nil
-}
-*/
-
-// need to fix
-/*
-func sshServer(cmd *cobra.Command, args []string) error {
-	flags := cmd.Flags()
-
-	server := args[0]
-	bin, err := flags.GetString("bin")
-	if err != nil {
-		return err
-	}
-
-	user, err := flags.GetString("user")
-	if err != nil {
-		return err
-	}
-
-	keyPath, err := flags.GetString("keyPath")
-	if err != nil {
-		return err
-	}
-
-	return executeSSHCommand(server, bin, user, keyPath, "")
-}
-*/
-
 func logAction(message string) func(*cobra.Command, []string) {
 	return func(c *cobra.Command, s []string) { log.Println(message) }
 }
@@ -546,17 +452,3 @@ func serverStatus(cmd *cobra.Command, args []string) error {
 
 	return nil
 }
-
-// need to fix
-/*
-func dockerCommandsViaSSH(cmd *cobra.Command, args []string) error {
-	server := args[0]
-	dockerCommand := strings.Join(args[1:], " ") // Join all arguments after the server ID as the Docker command
-
-	// Set up flags for the SSH command
-	cmd.Flags().Set("extraFlags", dockerCommand)
-
-	// Call sshServer to handle the SSH connection and command execution
-	return sshServer(cmd, []string{server})
-}
-*/
