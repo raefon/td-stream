@@ -21,7 +21,7 @@ var (
 		Args:  cobra.ExactArgs(1), // Expects exactly one argument: server_id
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Hardcoded container ID
-			containerID := "wolf"
+			containerID := "wolf-wolf-1"
 			dockerCommand := "docker logs " + containerID
 
 			// Prepare the arguments for dockerCommandsViaSSH
@@ -42,6 +42,11 @@ var (
 		Args:  cobra.ExactArgs(1), // Expects exactly one argument: server_id
 		RunE: func(cmd *cobra.Command, args []string) error {
 			serverID := args[0]
+
+			cmd.Flags().String("bin", "ssh", "Name of SSH client executable (e.g., ssh, mosh)")
+			cmd.Flags().String("user", "user", "User account to use for login")
+			cmd.Flags().String("command", "", "Command to execute over SSH")
+
 			return wolfInstall(cmd, serverID)
 		},
 	}
@@ -122,15 +127,16 @@ func dockerCommandsViaSSH(cmd *cobra.Command, args []string) error {
 	// Call sshServer to handle the SSH connection and command execution
 	return sshServer(cmd, []string{server})
 }
+
 func getWolfFiles(cmd *cobra.Command, server string) error {
 	// Define the files and their target location
 	files := []string{"docker-compose.nvidia.yml", "docker-nvidia-start.sh"}
-	targetDir := "/opt/wolf/"
+	targetDir := "/home/user/"
 
 	// Build the curl command to fetch files from GitHub and place them in the target directory
 	curlCommands := make([]string, len(files))
 	for i, file := range files {
-		url := fmt.Sprintf("https://raw.githubusercontent.com/raefon/td-stream/wolf/%s", file)
+		url := fmt.Sprintf("https://raw.githubusercontent.com/raefon/td-stream/main/wolf/%s", file)
 		curlCommands[i] = fmt.Sprintf("curl -o %s%s %s", targetDir, file, url)
 	}
 	fullCurlCommand := strings.Join(curlCommands, " && ")
@@ -150,7 +156,7 @@ func wolfInstall(cmd *cobra.Command, server string) error {
 	}
 
 	// Define the command to run docker-nvidia-start.sh
-	startScriptCommand := "bash /opt/wolf/docker-nvidia-start.sh"
+	startScriptCommand := "bash /home/user/docker-nvidia-start.sh /home/user/docker-compose.nvidia.yml"
 
 	// Set the command to be executed over SSH
 	cmd.Flags().Set("command", startScriptCommand)

@@ -38,7 +38,7 @@ NVIDIA_VOLUME_NAME=nvidia-driver-vol-$CURRENT_NVIDIA_VERSION
 docker create --rm --mount source=$NVIDIA_VOLUME_NAME,destination=/usr/nvidia gow/nvidia-driver:local sh
 
 # Check if the nvidia-drm module's modeset parameter is set to Y
-if [[ $(cat /sys/module/nvidia_drm/parameters/modeset) != "Y" ]]; then
+if [[ $(sudo cat /sys/module/nvidia_drm/parameters/modeset) != "Y" ]]; then
     echo "The nvidia-drm module's modeset parameter is not set to Y."
     echo "See https://games-on-whales.github.io/wolf/stable/user/quickstart.html for expected setup."
     exit 2
@@ -47,7 +47,8 @@ fi
 # Sometime /dev/nvidia-caps/* is not present after boot
 # Running this seems to make it appear
 # TODO enqure why
-nvidia-smi > /dev/null # still show errors
+sudo nvidia-smi > /dev/null # still show errors
+sudo nvidia-container-cli --load-kmods info
 
 # Start wolf with matching nvidia volume
 SCRIPT_DIR=$(dirname $0)
