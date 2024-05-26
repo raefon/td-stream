@@ -117,7 +117,7 @@ func init() {
 	deployCmd.Flags().Int("vcpus", 2, "Number of vCPUs that you would like")
 	deployCmd.Flags().Int("storage", 20, "Number of GB of networked storage")
 	deployCmd.Flags().Int("ram", 4, "Number of GB of RAM to be deployed.")
-	deployCmd.Flags().String("operating_system", "Ubuntu 20.04 LTS", "Operating system")
+	deployCmd.Flags().String("operating_system", "Ubuntu 22.04 LTS", "Operating system")
 	deployCmd.Flags().String("internal_ports", "80,443", "Internal ports to be used by the server")
 	deployCmd.Flags().String("external_ports", "47600,46701", "External ports to be used by the server")
 
