@@ -6,6 +6,7 @@ services:
       NVIDIA_DRIVER_VOLUME_NAME: ${NVIDIA_VOLUME_NAME}
       HOST_APPS_STATE_FOLDER: /etc/wolf
       WOLF_LOG_LEVEL: DEBUG
+      WOLF_RENDER_NODE: /dev/dri/renderD129
     volumes:
       # Used by other containers created by wolf. Do not change
       - /etc/wolf/:/etc/wolf:rw
