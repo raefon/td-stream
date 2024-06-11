@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1af4", ATTR{class}=="0x030000", ATTR{remove}="1"
