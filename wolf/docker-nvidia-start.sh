@@ -29,13 +29,12 @@ fi
 
 # Build image
 curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile | \
-    docker build -t gow/nvidia-driver:local -f - --build-arg NV_VERSION=$CURRENT_NVIDIA_VERSION /tmp
+    docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$CURRENT_NVIDIA_VERSION /tmp
 
 # Populate nvidia volume
 # Create a dummy container to create and populate volume if not already exists
 # If volume already exists this won't have any effect
-NVIDIA_VOLUME_NAME=nvidia-driver-vol-$CURRENT_NVIDIA_VERSION
-docker create --rm --mount source=$NVIDIA_VOLUME_NAME,destination=/usr/nvidia gow/nvidia-driver:local sh
+docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
 
 # Check if the nvidia-drm module's modeset parameter is set to Y
 if [[ $(sudo cat /sys/module/nvidia_drm/parameters/modeset) != "Y" ]]; then
@@ -52,4 +51,4 @@ sudo nvidia-container-cli --load-kmods info
 
 # Start wolf with matching nvidia volume
 SCRIPT_DIR=$(dirname $0)
-NVIDIA_VOLUME_NAME=$NVIDIA_VOLUME_NAME docker compose -p wolf -f $WOLF_COMPOSE_FILE up -d
+docker compose -p wolf -f $WOLF_COMPOSE_FILE up -d
