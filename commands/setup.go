@@ -45,7 +45,7 @@ func setupServerCmd(cmd *cobra.Command, server string) error {
 
 func getSetupFiles(cmd *cobra.Command, server string) error {
 	// Define the files and their target location
-	files := []string{"setup.sh"}
+	files := []string{"setup.sh", "88-wolf-virtual-inputs.rules", "89-blacklist-vfio.rules"}
 	targetDir := "/home/user/"
 
 	// Build the curl command to fetch files from GitHub and place them in the target directory
