@@ -35,4 +35,3 @@ volumes:
   # Volume populated with nvidia drivers 
   nvidia-driver-vol:
     external: true
-    name: ${NVIDIA_VOLUME_NAME}
