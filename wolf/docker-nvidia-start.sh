@@ -7,6 +7,8 @@
 
 set -e
 
+IP_ADDRESS=$(curl ifconfig.me)
+
 WOLF_COMPOSE_FILE=$1
 
 NVIDIA_VERSION_FILE="/sys/module/nvidia/version"
@@ -51,4 +53,4 @@ sudo nvidia-container-cli --load-kmods info
 
 # Start wolf with matching nvidia volume
 SCRIPT_DIR=$(dirname $0)
-docker compose -p wolf -f $WOLF_COMPOSE_FILE up -d
+IP_ADDR=$IP_ADDRESS docker compose -p wolf -f $WOLF_COMPOSE_FILE up -d
