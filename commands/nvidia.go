@@ -32,7 +32,7 @@ func init() {
 
 func nvidiaInstall(cmd *cobra.Command, server string) error {
 
-	startScriptCommand := "sudo add-apt-repository ppa:graphics-drivers/ppa -y && sudo apt update && sudo apt install nvidia-driver-550 -y && echo 'Complete.... Rebooting.' && sudo reboot"
+	startScriptCommand := "sudo add-apt-repository ppa:graphics-drivers/ppa -y && sudo apt update && sudo apt install nvidia-driver-555 -y && echo 'Complete.... Rebooting.' && sudo reboot"
 
 	// Set the command to be executed over SSH
 	cmd.Flags().Set("command", startScriptCommand)
