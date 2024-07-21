@@ -2,7 +2,7 @@ Work in progress for leveraging tensordock and wolf to create a Game Stream clie
 
 ## Installation
 
-Install using `go install github.com/raefon/td-stream` or grab a build from [Releases](https://github.com/raefon/td-stream/releases)
+Install using `go install github.com/raefon/td-stream@latest` or grab a build from [Releases](https://github.com/raefon/td-stream/releases)
 
 ## Build
 
